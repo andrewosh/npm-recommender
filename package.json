@@ -1,0 +1,39 @@
+{
+  "name": "npm-recommend",
+  "version": "0.0.1",
+  "description": "Recommend NPM packages based on existing packages you've required",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/all.js",
+    "download": "nodejs lib/download.js",
+    "train": "nodejs lib/train.js",
+    "serve": "nodejs lib/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrewosh/npm-recommend.git"
+  },
+  "keywords": [
+    "npm",
+    "recommend",
+    "packages"
+  ],
+  "author": "Andrew Osheroff <andrewosh@gmail.com> (http://andrewosh.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrewosh/npm-recommend/issues"
+  },
+  "homepage": "https://github.com/andrewosh/npm-recommend",
+  "dependencies": {
+    "async": "^1.5.2",
+    "cradle": "^0.7.1",
+    "jsonfile": "^2.2.3",
+    "lodash": "^4.2.1",
+    "progress": "^1.1.8",
+    "string-format": "^0.5.0",
+    "word2vec": "^0.9.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
+}
