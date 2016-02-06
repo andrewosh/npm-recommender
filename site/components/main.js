@@ -165,11 +165,15 @@ module.exports = function (container, opts) {
       }
       moduleList[i].innerHTML = matches[i].word
       var description = matches[i].description
-      var shortDesc = description.slice(0, 72)
-      if (description.length > 73) {
-        shortDesc = shortDesc.slice(0, 69) + '...'
+      if (description) {
+        var shortDesc = description.slice(0, 72)
+        if (description.length > 73) {
+          shortDesc = shortDesc.slice(0, 69) + '...'
+        }
+        descriptionList[i].innerHTML = shortDesc
+      } else {
+        descriptionList[i].innerHTML = ''
       }
-      descriptionList[i].innerHTML = shortDesc
     })
   }
   
