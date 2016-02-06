@@ -1,7 +1,6 @@
 var css = require('dom-css')
 
 module.exports = function (container, opts) {
-
   var colors = opts.colors
   var fonts = opts.fonts
   var ismobile = window.innerWidth < 600

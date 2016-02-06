@@ -2,7 +2,6 @@ var css = require('dom-css')
 var _ = require('lodash')
 
 module.exports = function (container, opts) {
-
   var colors = opts.colors
   var fonts = opts.fonts
 
@@ -154,5 +153,4 @@ module.exports = function (container, opts) {
       marginBottom: '2%'
     })
   })
-
 }
