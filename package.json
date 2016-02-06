@@ -32,6 +32,7 @@
     "cradle": "^0.7.1",
     "dom-css": "^2.0.0",
     "express": "^4.13.4",
+    "fastclick": "^1.0.6",
     "jsonfile": "^2.2.3",
     "lodash": "^4.2.1",
     "mongoose": "^4.4.2",

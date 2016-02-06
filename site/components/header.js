@@ -34,7 +34,8 @@ module.exports = function (container, opts) {
       margin: '0 auto',
       position: 'absolute',
       right: '0px',
-      left: '0px'
+      left: '0px',
+      top: window.innerHeight * 0.01 + 'px'
     })
 
     css(name, {

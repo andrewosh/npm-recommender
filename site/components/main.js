@@ -17,105 +17,83 @@ module.exports = function (container, opts) {
   var ismobile = window.innerWidth < 600
 
   var box = container.appendChild(document.createElement('div'))
-  var topLeft = box.appendChild(document.createElement('div'))
-  var topRight = box.appendChild(document.createElement('div'))
-  var bottomLeft = box.appendChild(document.createElement('div'))
-  var bottomRight = box.appendChild(document.createElement('div'))
+  var top = box.appendChild(document.createElement('div'))
+  var bottom = box.appendChild(document.createElement('div'))
 
   css(box, {
     position: 'absolute',
     margin: '0 auto',
-    left: '0%',
-    right: '4%',
-    width: '96%',
-    top: '20%',
-    height: '60%'
+    left: ismobile ? '4%' : '20%',
+    right: ismobile ? '1%' : '14%',
+    width: ismobile ? '95%' : '66%',
+    top: '18%',
+    height: '70%'
   })
 
-  css(topLeft, {
-    width: '49%',
-    height: ismobile ? '15%' : '20%',
+  css(top, {
+    width: '100%',
+    height: '15%',
     display: 'inline-block'
   })
 
-  css(topRight, {
-    width: '51%',
-    height: ismobile ? '15%' : '20%',
-    display: 'inline-block'
-  })
-
-  css(bottomLeft, {
-    width: '49%',
-    height: ismobile ? '85%' : '80%',
-    display: 'inline-block',
-    verticalAlign: 'top'
-  })
-
-  css(bottomRight, {
+  css(bottom, {
     top: 0,
-    width: '51%',
+    width: '100%',
     height: ismobile ? '85%' : '80%',
     display: 'inline-block',
     verticalAlign: 'top'
   })
 
-  var welcome = topLeft.appendChild(document.createElement('div'))
-  var welcomeText = welcome.appendChild(document.createElement('span'))
-  var prompt = bottomLeft.appendChild(document.createElement('div'))
-  var promptText = prompt.appendChild(document.createElement('span'))
-  var input = topRight.appendChild(document.createElement('input'))
-  var output = bottomRight.appendChild(document.createElement('div'))
+  var welcome = top.appendChild(document.createElement('span'))
+  var input = top.appendChild(document.createElement('input'))
+  var prompt = top.appendChild(document.createElement('span'))
+
+  var output = bottom.appendChild(document.createElement('div'))
   input.id = 'input'
   input.className = 'negative'
   input.contentEditable = true
   input.placeholder = 'package'
-  input.innerHTML = 'module name'
-  welcomeText.innerHTML = 'if you use'
-  welcomeText.className = 'noselect'
-  promptText.className = 'noselect'
-  promptText.innerHTML = 'check out'
+  welcome.innerHTML = 'if you use'
+  welcome.className = 'noselect'
+  prompt.className = 'noselect'
+  prompt.innerHTML = 'check out'
 
   css(welcome, {
-    textAlign: 'right'
+    color: colors.white,
+    borderBottom: colors.white + ' dotted 2px',
+    fontFamily: fonts.code,
+    paddingBottom: '3px',
+    paddingRight: '2%',
+    marginRight: '5%',
+    textAlign: 'right',
+    fontSize: '145%'
   })
 
   css(prompt, {
-    textAlign: 'right'
-  })
-
-  css(welcomeText, {
     color: colors.white,
     borderBottom: colors.white + ' dotted 2px',
     fontFamily: fonts.code,
     paddingBottom: '3px',
-    textAlign: 'right',
-    marginRight: '10%',
-    fontSize: '165%'
-  })
-
-  css(promptText, {
-    color: colors.white,
-    borderBottom: colors.white + ' dotted 2px',
-    fontFamily: fonts.code,
-    paddingBottom: '3px',
-    textAlign: 'right',
-    marginRight: '10%',
-    fontSize: '165%'
+    paddingRight: '2%',
+    textAlign: 'left',
+    fontSize: '145%'
   })
 
   css(input, {
     color: colors.brown,
     fontFamily: fonts.code,
+    width: '35%',
     paddingBottom: '3px',
+    paddingRight: '2%',
+    marginRight: '5%',
     background: 'none',
-    fontSize: '165%',
+    fontSize: '145%',
     border: 'none',
-    width: '75%',
     borderBottom: colors.brown + ' dotted 2px'
   })
 
   window.onload = function() {
-    document.getElementById('input').focus();
+    document.getElementById('input').focus()
   }
 
   input.onfocus = function () {
@@ -133,46 +111,81 @@ module.exports = function (container, opts) {
   }
 
   var moduleList = []
-  var descriptionList = []
+  var itemName
+  var itemDescription
 
   var renderMatches = function (start, matches) {
-    _.range(start, start + 5).forEach(function (i) {
+    _.range(start, start + 10).forEach(function (i) {
       if (moduleList.length < i + 1) {
         moduleList.push(output.appendChild(document.createElement('div')))
-        descriptionList.push(output.appendChild(document.createElement('div')))
-        descriptionList[i].className = 'negative'
-        moduleList[i].className = 'negative'
+        itemName = moduleList[i].appendChild(document.createElement('div'))
+        itemDescription = moduleList[i].appendChild(document.createElement('div'))
+        itemDescription.className = 'negative'
+        itemName.className = 'negative'
+        itemName.innerHTML = matches[i].word
+        itemLink = itemName.appendChild(document.createElement('span'))
+        itemLink.innerHTML = '>'
+        itemLink.className = 'noselect'
+
+        var description = matches[i].description
+        if (description) {
+          var shortDesc = description.slice(0, 72)
+          if (description.length > 73) {
+            shortDesc = shortDesc.slice(0, 69) + '...'
+          }
+          itemDescription.innerHTML = shortDesc
+        } else {
+          itemDescription.innerHTML = ''
+        }
+
+        itemName.onclick = function () {
+          window.open('https://npmjs.org/package/' + matches[i].word)
+        }
+
+        itemLink.onclick = function (event) {
+          event.stopPropagation()
+          input.value = matches[i].word
+        }
+
         css(moduleList[i], {
-          color: colors.brown,
-          fontFamily: fonts.code,
-          fontWeight: 200,
-          paddingBottom: '3px',
-          fontSize: '165%',
-          width: '75%',
-          borderBottom: colors.brown + ' dotted 2px',
-          marginBottom: '1%'
+          width: '45%',
+          height: '18%',
+          marginBottom: '2%',
+          marginRight: '5%',
+          display: 'inline-block',
+          verticalAlign: 'top'      
         })
 
-        css(descriptionList[i], {
+        css(itemName, {
           color: colors.brown,
           fontFamily: fonts.code,
           fontWeight: 200,
           paddingBottom: '3px',
-          fontSize: '75%',
-          width: '75%',
-          marginBottom: '2%'
+          fontSize: '145%',
+          borderBottom: colors.brown + ' dotted 2px',
+          marginBottom: '2%',
+          textDecoration: 'none',
+          cursor: 'pointer'
         })
-      }
-      moduleList[i].innerHTML = matches[i].word
-      var description = matches[i].description
-      if (description) {
-        var shortDesc = description.slice(0, 72)
-        if (description.length > 73) {
-          shortDesc = shortDesc.slice(0, 69) + '...'
-        }
-        descriptionList[i].innerHTML = shortDesc
-      } else {
-        descriptionList[i].innerHTML = ''
+
+        css(itemLink, {
+          color: colors.brown,
+          fontFamily: fonts.code,
+          fontWeight: 200,
+          fontSize: '80%',
+          paddingLeft: '4%',
+          textDecoration: 'none',
+          opacity: 0.5,
+          cursor: 'pointer'
+        })
+
+        css(itemDescription, {
+          color: colors.brown,
+          fontFamily: fonts.code,
+          fontWeight: 200,
+          paddingBottom: '3px',
+          fontSize: '75%'
+        })
       }
     })
   }
@@ -181,9 +194,20 @@ module.exports = function (container, opts) {
 
   input.oninput = function () {
     var name = input.value
+    // var matches = require('./example.js')
+    // renderMatches(0, matches)
     throttledSimilar(name, function (err, matches) {
       if (err) return err
       renderMatches(0, matches)
     })
+  }
+
+  return {
+    hide: function () {
+      css(box, {opacity: 0.0})
+    },
+    show: function () {
+      css(box, {opacity: 1.0})
+    }
   }
 }
