@@ -1,0 +1,13 @@
+::-webkit-input-placeholder { color: rgb(74,75,64); }
+::-moz-placeholder { color: rgb(74,75,64); }
+:-ms-input-placeholder { color: rgb(74,75,64); }
+input:-moz-placeholder { color: rgb(74,75,64); }
+
+.negative::selection { background: white; }
+.negative::-moz-selection { background: white; }
+
+.positive::selection { background: rgb(94,95,84); }
+.positive::-moz-selection { background: rgb(94,95,84); }
+
+.noselect::selection { background: none; }
+.noselect::-moz-selection { background: none; }
