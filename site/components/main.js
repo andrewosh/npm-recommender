@@ -117,17 +117,18 @@ module.exports = function (container, opts) {
   var renderMatches = function (start, matches) {
     _.range(start, start + 10).forEach(function (i) {
       if (moduleList.length < i + 1) {
+        var k = (i % 2 == 0) ? i / 2 : i + (5 - Math.ceil(i/2))
         moduleList.push(output.appendChild(document.createElement('div')))
         itemName = moduleList[i].appendChild(document.createElement('div'))
         itemDescription = moduleList[i].appendChild(document.createElement('div'))
         itemDescription.className = 'negative'
         itemName.className = 'negative'
-        itemName.innerHTML = matches[i].word
+        itemName.innerHTML = matches[k].word
         itemLink = itemName.appendChild(document.createElement('span'))
         itemLink.innerHTML = '>'
         itemLink.className = 'noselect'
 
-        var description = matches[i].description
+        var description = matches[k].description
         if (description) {
           var shortDesc = description.slice(0, 72)
           if (description.length > 73) {
@@ -144,7 +145,7 @@ module.exports = function (container, opts) {
 
         itemLink.onclick = function (event) {
           event.stopPropagation()
-          input.value = matches[i].word
+          input.value = matches[k].word
           throttledSimilar(input.value, function (err, matches) {
             if (err) return err
             renderMatches(0, matches)
