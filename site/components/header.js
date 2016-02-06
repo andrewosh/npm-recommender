@@ -7,12 +7,12 @@ module.exports = function (container, opts) {
 
   var logo = container.appendChild(document.createElement('img'))
   logo.width = '100'
-  logo.src = '../logo-transparent.svg'
+  logo.src = '../assets/logo.svg'
   logo.className = 'noselect'
 
   var name = container.appendChild(document.createElement('img'))
   name.width = '300'
-  name.src = '../name-transparent.svg'
+  name.src = '../assets/name.svg'
   name.className = 'noselect'
 
   css(logo, {
