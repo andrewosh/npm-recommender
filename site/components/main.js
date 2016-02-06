@@ -145,6 +145,10 @@ module.exports = function (container, opts) {
         itemLink.onclick = function (event) {
           event.stopPropagation()
           input.value = matches[i].word
+          throttledSimilar(input.value, function (err, matches) {
+            if (err) return err
+            renderMatches(0, matches)
+          })
         }
 
         css(moduleList[i], {
