@@ -7,7 +7,8 @@
     "test": "mocha test/all.js",
     "download": "nodejs lib/download.js",
     "train": "nodejs lib/train.js",
-    "serve": "nodejs lib/server.js"
+    "serve": "nodejs lib/server.js",
+    "start": "cd site && budo index.js:bundle.js --watch"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
   "dependencies": {
     "async": "^1.5.2",
     "cradle": "^0.7.1",
+    "dom-css": "^2.0.0",
     "jsonfile": "^2.2.3",
     "lodash": "^4.2.1",
     "progress": "^1.1.8",
