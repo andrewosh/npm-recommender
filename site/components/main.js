@@ -111,46 +111,22 @@ module.exports = function (container, opts) {
   }
 
   var moduleList = []
-  var itemName
-  var itemDescription
+  var itemName = []
+  var itemDescription = []
+  var itemLink = []
 
   var renderMatches = function (start, matches) {
     _.range(start, start + 10).forEach(function (i) {
+
       if (moduleList.length < i + 1) {
-        var k = (i % 2 == 0) ? i / 2 : i + (5 - Math.ceil(i/2))
         moduleList.push(output.appendChild(document.createElement('div')))
-        itemName = moduleList[i].appendChild(document.createElement('div'))
-        itemDescription = moduleList[i].appendChild(document.createElement('div'))
-        itemDescription.className = 'negative'
-        itemName.className = 'negative'
-        itemName.innerHTML = matches[k].word
-        itemLink = itemName.appendChild(document.createElement('span'))
+        itemName.push(moduleList[i].appendChild(document.createElement('div')))
+        itemDescription.push(moduleList[i].appendChild(document.createElement('div')))
+        itemDescription[i].className = 'negative'
+        itemName[i].className = 'negative'
+        itemLink.push(itemName[i].appendChild(document.createElement('span')))
         itemLink.innerHTML = '>'
         itemLink.className = 'noselect'
-
-        var description = matches[k].description
-        if (description) {
-          var shortDesc = description.slice(0, 72)
-          if (description.length > 73) {
-            shortDesc = shortDesc.slice(0, 69) + '...'
-          }
-          itemDescription.innerHTML = shortDesc
-        } else {
-          itemDescription.innerHTML = ''
-        }
-
-        itemName.onclick = function () {
-          window.open('https://npmjs.org/package/' + matches[i].word)
-        }
-
-        itemLink.onclick = function (event) {
-          event.stopPropagation()
-          input.value = matches[k].word
-          throttledSimilar(input.value, function (err, matches) {
-            if (err) return err
-            renderMatches(0, matches)
-          })
-        }
 
         css(moduleList[i], {
           width: '45%',
@@ -161,7 +137,7 @@ module.exports = function (container, opts) {
           verticalAlign: 'top'      
         })
 
-        css(itemName, {
+        css(itemName[i], {
           color: colors.brown,
           fontFamily: fonts.code,
           fontWeight: 200,
@@ -173,7 +149,7 @@ module.exports = function (container, opts) {
           cursor: 'pointer'
         })
 
-        css(itemLink, {
+        css(itemLink[i], {
           color: colors.brown,
           fontFamily: fonts.code,
           fontWeight: 200,
@@ -184,12 +160,38 @@ module.exports = function (container, opts) {
           cursor: 'pointer'
         })
 
-        css(itemDescription, {
+        css(itemDescription[i], {
           color: colors.brown,
           fontFamily: fonts.code,
           fontWeight: 200,
           paddingBottom: '3px',
           fontSize: '75%'
+        })
+      }
+
+      var k = (i % 2 == 0) ? i / 2 : i + (5 - Math.ceil(i/2))
+      itemName[i].innerHTML = matches[k].word
+      var description = matches[k].description
+      if (description) {
+        var shortDesc = description.slice(0, 72)
+        if (description.length > 73) {
+          shortDesc = shortDesc.slice(0, 69) + '...'
+        }
+        itemDescription[i].innerHTML = shortDesc
+      } else {
+        itemDescription[i].innerHTML = ''
+      }
+
+      itemName[i].onclick = function () {
+        window.open('https://npmjs.org/package/' + matches[k].word)
+      }
+
+      itemLink[i].onclick = function (event) {
+        event.stopPropagation()
+        input.value = matches[k].word
+        throttledSimilar(input.value, function (err, matches) {
+          if (err) return err
+          renderMatches(0, matches)
         })
       }
     })
