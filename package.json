@@ -28,6 +28,7 @@
   "homepage": "https://github.com/andrewosh/npm-recommend",
   "dependencies": {
     "async": "^1.5.2",
+    "browser-request": "^0.3.3",
     "cradle": "^0.7.1",
     "dom-css": "^2.0.0",
     "express": "^4.13.4",
