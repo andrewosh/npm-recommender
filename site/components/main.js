@@ -1,5 +1,15 @@
 var css = require('dom-css')
 var _ = require('lodash')
+var request = require('request')
+
+var similar = function (name, cb) {
+  request({
+    url: 'http://npmrec.com/api/similar/' + name,
+    json: true
+  }, function (req, res, body) {
+    return cb(null, body)
+  })
+}
 
 module.exports = function (container, opts) {
   var colors = opts.colors
@@ -122,37 +132,53 @@ module.exports = function (container, opts) {
     })
   }
 
-  moduleList = []
-  descriptionList = []
+  var moduleList = []
+  var descriptionList = []
 
-  _.range(5).forEach(function (i) {
-    moduleList.push(output.appendChild(document.createElement('div')))
-    descriptionList.push(output.appendChild(document.createElement('div')))
-    moduleList[i].innerHTML = 'browserify'
-    moduleList[i].className = 'negative'
-    var description = 'browser-side require() the node way'
-    descriptionList[i].innerHTML = description.slice(0, 72)
-    descriptionList[i].className = 'negative'
+  var renderMatches = function (start, matches) {
+    _.range(start, start + 5).forEach(function (i) {
+      if (moduleList.length < i + 1) {
+        moduleList.push(output.appendChild(document.createElement('div')))
+        descriptionList.push(output.appendChild(document.createElement('div')))
+        descriptionList[i].className = 'negative'
+        moduleList[i].className = 'negative'
+        css(moduleList[i], {
+          color: colors.brown,
+          fontFamily: fonts.code,
+          fontWeight: 200,
+          paddingBottom: '3px',
+          fontSize: '165%',
+          width: '75%',
+          borderBottom: colors.brown + ' dotted 2px',
+          marginBottom: '1%'
+        })
 
-    css(moduleList[i], {
-      color: colors.brown,
-      fontFamily: fonts.code,
-      fontWeight: 200,
-      paddingBottom: '3px',
-      fontSize: '165%',
-      width: '75%',
-      borderBottom: colors.brown + ' dotted 2px',
-      marginBottom: '1%'
+        css(descriptionList[i], {
+          color: colors.brown,
+          fontFamily: fonts.code,
+          fontWeight: 200,
+          paddingBottom: '3px',
+          fontSize: '75%',
+          width: '75%',
+          marginBottom: '2%'
+        })
+      }
+      moduleList[i].innerHTML = matches[i].word
+      var description = matches[i].description
+      var shortDesc = description.slice(0, 72)
+      if (description.length > 73) {
+        shortDesc = shortDesc.slice(0, 69) + '...'
+      }
+      descriptionList[i].innerHTML = shortDesc
     })
+  }
+  
+  var throttledSimilar = _.throttle(similar, 250)
 
-    css(descriptionList[i], {
-      color: colors.brown,
-      fontFamily: fonts.code,
-      fontWeight: 200,
-      paddingBottom: '3px',
-      fontSize: '75%',
-      width: '75%',
-      marginBottom: '2%'
-    })
-  })
+  input.oninput(function () {
+    var name = input.innerHTML
+    throttledSimilar(name, function (err, matches) {
+      if (err) return err
+      renderMatches(0, matches)
+   })
 }
