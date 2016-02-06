@@ -176,7 +176,7 @@ module.exports = function (container, opts) {
   var throttledSimilar = _.throttle(similar, 250)
 
   input.oninput = function () {
-    var name = input.innerHTML
+    var name = input.value
     throttledSimilar(name, function (err, matches) {
       if (err) return err
       renderMatches(0, matches)
