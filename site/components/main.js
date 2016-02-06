@@ -175,11 +175,11 @@ module.exports = function (container, opts) {
   
   var throttledSimilar = _.throttle(similar, 250)
 
-  input.oninput(function () {
+  input.oninput = function () {
     var name = input.innerHTML
     throttledSimilar(name, function (err, matches) {
       if (err) return err
       renderMatches(0, matches)
-   })
-  })
+    })
+  }
 }
