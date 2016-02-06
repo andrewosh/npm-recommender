@@ -8,7 +8,7 @@
     "download": "nodejs lib/download.js",
     "train": "nodejs lib/train.js",
     "serve": "nodejs lib/server.js",
-    "build": "browserify site/index.js -i site/bundle.js",
+    "build": "browserify site/index.js -o site/bundle.js",
     "start": "cd site && budo index.js:bundle.js --watch"
   },
   "repository": {
