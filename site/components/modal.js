@@ -29,7 +29,7 @@ module.exports = function (container, opts) {
   }
 
   css(overview, {
-    fontSize: '100%',
+    fontSize: '110%',
     padding: '5%',
     fontFamily: fonts.code,
     color: colors.brown,

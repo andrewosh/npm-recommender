@@ -66,7 +66,8 @@ module.exports = function (container, opts) {
     paddingRight: '2%',
     marginRight: '5%',
     textAlign: 'right',
-    fontSize: '145%'
+    fontSize: '145%',
+    letterSpacing: '-0.03em'
   })
 
   css(prompt, {
@@ -76,7 +77,8 @@ module.exports = function (container, opts) {
     paddingBottom: '3px',
     paddingRight: '2%',
     textAlign: 'left',
-    fontSize: '145%'
+    fontSize: '145%',
+    letterSpacing: '-0.03em'
   })
 
   css(input, {
@@ -89,7 +91,8 @@ module.exports = function (container, opts) {
     background: 'none',
     fontSize: '145%',
     border: 'none',
-    borderBottom: colors.brown + ' dotted 2px'
+    borderBottom: colors.brown + ' dotted 2px',
+    letterSpacing: '-0.03em'
   })
 
   window.onload = function() {
@@ -125,8 +128,8 @@ module.exports = function (container, opts) {
         itemDescription[i].className = 'negative'
         itemName[i].className = 'negative'
         itemLink.push(itemName[i].appendChild(document.createElement('span')))
-        itemLink.innerHTML = '>'
-        itemLink.className = 'noselect'
+        itemLink[i].innerHTML = '>'
+        itemLink[i].className = 'noselect'
 
         css(moduleList[i], {
           width: '45%',
@@ -146,8 +149,11 @@ module.exports = function (container, opts) {
           borderBottom: colors.brown + ' dotted 2px',
           marginBottom: '2%',
           textDecoration: 'none',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          letterSpacing: '-0.03em'
         })
+
+        if (ismobile) css(itemName[i], {fontSize: '115%'})
 
         css(itemLink[i], {
           color: colors.brown,
@@ -155,6 +161,7 @@ module.exports = function (container, opts) {
           fontWeight: 200,
           fontSize: '80%',
           paddingLeft: '4%',
+          paddingRight: '4%',
           textDecoration: 'none',
           opacity: 0.5,
           cursor: 'pointer'
@@ -171,6 +178,7 @@ module.exports = function (container, opts) {
 
       var k = (i % 2 == 0) ? i / 2 : i + (5 - Math.ceil(i/2))
       itemName[i].innerHTML = matches[k].word
+      itemName[i].appendChild(itemLink[i])
       var description = matches[k].description
       if (description) {
         var shortDesc = description.slice(0, 72)
