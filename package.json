@@ -29,10 +29,13 @@
     "async": "^1.5.2",
     "cradle": "^0.7.1",
     "dom-css": "^2.0.0",
+    "express": "^4.13.4",
     "jsonfile": "^2.2.3",
     "lodash": "^4.2.1",
+    "mongoose": "^4.4.2",
     "progress": "^1.1.8",
     "string-format": "^0.5.0",
+    "winston": "^2.1.1",
     "word2vec": "^0.9.2"
   },
   "devDependencies": {
