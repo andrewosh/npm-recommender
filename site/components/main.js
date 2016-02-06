@@ -181,4 +181,5 @@ module.exports = function (container, opts) {
       if (err) return err
       renderMatches(0, matches)
    })
+  })
 }
