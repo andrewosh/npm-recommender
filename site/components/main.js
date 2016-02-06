@@ -4,6 +4,7 @@ var _ = require('lodash')
 module.exports = function (container, opts) {
   var colors = opts.colors
   var fonts = opts.fonts
+  var ismobile = window.innerWidth < 600
 
   var box = container.appendChild(document.createElement('div'))
   var topLeft = box.appendChild(document.createElement('div'))
@@ -22,28 +23,28 @@ module.exports = function (container, opts) {
   })
 
   css(topLeft, {
-    width: '50%',
-    height: '20%',
+    width: '49%',
+    height: ismobile ? '15%' : '20%',
     display: 'inline-block'
   })
 
   css(topRight, {
-    width: '50%',
-    height: '20%',
+    width: '51%',
+    height: ismobile ? '15%' : '20%',
     display: 'inline-block'
   })
 
   css(bottomLeft, {
-    width: '50%',
-    height: '80%',
+    width: '49%',
+    height: ismobile ? '85%' : '80%',
     display: 'inline-block',
     verticalAlign: 'top'
   })
 
   css(bottomRight, {
     top: 0,
-    width: '50%',
-    height: '80%',
+    width: '51%',
+    height: ismobile ? '85%' : '80%',
     display: 'inline-block',
     verticalAlign: 'top'
   })
@@ -79,7 +80,7 @@ module.exports = function (container, opts) {
     paddingBottom: '3px',
     textAlign: 'right',
     marginRight: '10%',
-    fontSize: '175%'
+    fontSize: '165%'
   })
 
   css(promptText, {
@@ -89,7 +90,7 @@ module.exports = function (container, opts) {
     paddingBottom: '3px',
     textAlign: 'right',
     marginRight: '10%',
-    fontSize: '175%'
+    fontSize: '165%'
   })
 
   css(input, {
@@ -97,7 +98,7 @@ module.exports = function (container, opts) {
     fontFamily: fonts.code,
     paddingBottom: '3px',
     background: 'none',
-    fontSize: '175%',
+    fontSize: '165%',
     border: 'none',
     width: '75%',
     borderBottom: colors.brown + ' dotted 2px'
@@ -128,16 +129,17 @@ module.exports = function (container, opts) {
     moduleList.push(output.appendChild(document.createElement('div')))
     descriptionList.push(output.appendChild(document.createElement('div')))
     moduleList[i].innerHTML = 'browserify'
-    moduleList[i].className = 'negative',
-    descriptionList[i].innerHTML = 'browser-side require() the node way'
-    descriptionList[i].className = 'negative',
+    moduleList[i].className = 'negative'
+    var description = 'browser-side require() the node way'
+    descriptionList[i].innerHTML = description.slice(0, 72)
+    descriptionList[i].className = 'negative'
 
     css(moduleList[i], {
       color: colors.brown,
       fontFamily: fonts.code,
       fontWeight: 200,
       paddingBottom: '3px',
-      fontSize: '175%',
+      fontSize: '165%',
       width: '75%',
       borderBottom: colors.brown + ' dotted 2px',
       marginBottom: '1%'
@@ -148,7 +150,7 @@ module.exports = function (container, opts) {
       fontFamily: fonts.code,
       fontWeight: 200,
       paddingBottom: '3px',
-      fontSize: '80%',
+      fontSize: '75%',
       width: '75%',
       marginBottom: '2%'
     })
