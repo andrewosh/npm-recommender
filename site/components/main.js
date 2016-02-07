@@ -66,8 +66,8 @@ module.exports = function (container, opts) {
     paddingRight: '2%',
     marginRight: '5%',
     textAlign: 'right',
-    fontSize: '145%',
-    letterSpacing: '-0.03em'
+    fontSize: '135%',
+    letterSpacing: '-0.035em'
   })
 
   css(prompt, {
@@ -77,8 +77,8 @@ module.exports = function (container, opts) {
     paddingBottom: '3px',
     paddingRight: '2%',
     textAlign: 'left',
-    fontSize: '145%',
-    letterSpacing: '-0.03em'
+    fontSize: '135%',
+    letterSpacing: '-0.035em'
   })
 
   css(input, {
@@ -89,10 +89,10 @@ module.exports = function (container, opts) {
     paddingRight: '2%',
     marginRight: '5%',
     background: 'none',
-    fontSize: '145%',
+    fontSize: '135%',
     border: 'none',
     borderBottom: colors.brown + ' dotted 2px',
-    letterSpacing: '-0.03em'
+    letterSpacing: '-0.035em'
   })
 
   window.onload = function() {
@@ -154,12 +154,12 @@ module.exports = function (container, opts) {
           fontFamily: fonts.code,
           fontWeight: 200,
           paddingBottom: '3px',
-          fontSize: '145%',
+          fontSize: '135%',
           borderBottom: colors.brown + ' dotted 2px',
           marginBottom: '2%',
           textDecoration: 'none',
           cursor: 'pointer',
-          letterSpacing: '-0.03em'
+          letterSpacing: '-0.035em'
         })
 
         if (ismobile) css(itemName[i], {fontSize: '115%'})
@@ -191,11 +191,10 @@ module.exports = function (container, opts) {
       itemName[i].appendChild(itemLink[i])
       var description = matches[k].description
       if (description) {
-        var shortDesc = description.slice(0, 72)
-        if (description.length > 73) {
-          shortDesc = shortDesc.slice(0, 69) + '...'
+        if (description.length > 80) {
+          description = description.slice(0, 77) + '...'
         }
-        itemDescription[i].innerHTML = shortDesc
+        itemDescription[i].innerHTML = description
       } else {
         itemDescription[i].innerHTML = ''
       }
