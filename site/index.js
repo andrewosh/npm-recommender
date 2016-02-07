@@ -15,8 +15,7 @@ var opts = {
     'darkbrown': 'rgb(14,15,4)'
   },
   fonts: {
-    'code': 'Hack',
-    'plain': 'Cooper Hewitt'
+    'code': 'Hack'
   }
 }
 
