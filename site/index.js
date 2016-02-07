@@ -21,6 +21,8 @@ var opts = {
 }
 
 var fontSize = '16px'
+if (window.innerWidth <= 1200) fontSize = '15px'
+if (window.innerWidth <= 1100) fontSize = '14px'
 if (window.innerWidth <= 1000) fontSize = '13px'
 if (window.innerWidth <= 900) fontSize = '12px'
 if (window.innerWidth <= 800) fontSize = '11px'

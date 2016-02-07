@@ -8,7 +8,7 @@ module.exports = function (container, opts) {
   var modal = container.appendChild(document.createElement('div'))
 
   var overview = modal.appendChild(document.createElement('div'))
-  overview.innerHTML = 'One of the great things about node.js is the ecosystem of composable, reusable modules. But with so many, it can be hard to find what you want, or discover something new! <br><br> To try and help, we trained a machine learning model called <a href="https://code.google.com/archive/p/word2vec/">word2vec</a> on the npm package corpus, treating each module as a "sentence", and its dependencies as "words". <br><br> If you type a package name, you will see packages that tend to be used with it. Click the arrow next to a package to seed a new search.<br><br> The code for this site is on <a href="http://github.com/andrewosh/npm-recommender">github</a>, and is itself powered by cool npm modules, like <a href="https://npmjs.org/package/word2vec">word2vec</a> and <a href="https://npmjs.org/package/cradle">cradle</a>. You can  query it as a service at http://npmrec.com/api/similar/<package>. <br><br>Made by <a href="https://github.com/andrewosh">@andrewosh</a> and <a href="https://github.com/freeman-lab">@freeman-lab</a>. We hope you enjoy it!'
+  overview.innerHTML = 'One of the great things about node.js is the ecosystem of composable, reusable modules. But with so many, it can be hard to find what you want, or discover something new! <br><br> To try and help, we trained a machine learning model called <a href="https://code.google.com/archive/p/word2vec/">word2vec</a> on the npm package corpus, treating each module as a "sentence", and its dependencies as "words". Type a package name to see packages commonly used with it. Click the arrow next to a package to start a new search.<br><br> All the code for this is on <a href="http://github.com/andrewosh/npm-recommender">github</a>, and is powered by cool modules, like <a href="https://npmjs.org/package/word2vec">word2vec</a> and <a href="https://npmjs.org/package/cradle">cradle</a>. You can  query it at http://npmrec.com/api/similar/<package>. Have a feature idea? Submit a pull request!<br><br>Made by <a href="https://github.com/andrewosh">@andrewosh</a> and <a href="https://github.com/freeman-lab">@freeman-lab</a>. We hope you enjoy it!'
   overview.className = 'noselect'
 
   css(modal, {
@@ -25,7 +25,7 @@ module.exports = function (container, opts) {
   })
 
   if (ismobile) {
-    css(modal, {left: '5%', right: '5%', width: '90%'})
+    css(modal, {left: '4.5%', right: '4.5%', width: '91%'})
   }
 
   css(overview, {
