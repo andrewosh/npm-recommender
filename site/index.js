@@ -2,7 +2,10 @@ var css = require('dom-css')
 var _ = require('lodash')
 var fastclick = require('fastclick').FastClick
 var ismobile = window.innerWidth < 600
+var request = require('browser-request')
 fastclick.attach(document.body)
+
+// layout
 
 var opts = {
   colors: {
@@ -41,10 +44,38 @@ var main = require('./components/main.js')(container, opts)
 var header = require('./components/header.js')(container, opts)
 var about = require('./components/about.js')(container, opts)
 var modal = require('./components/modal.js')(container, opts)
+var list = require('./components/list.js')(container, opts)
+
+// events
+
+var similar = _.throttle(function (name, cb) {
+  request({
+    url: 'http://npmrec.com/api/similar/' + name,
+    json: true
+  }, function (req, res, body) {
+    return cb(null, body)
+  })
+}, 300)
 
 about.events.on('click', function () {
   modal.show()
   main.hide()
+})
+
+main.events.on('input', function (name) {
+  similar(name, function (err, matches) {
+    if (err) return err
+    if (matches && (matches.length > 0)) {
+      list.update(matches)
+      list.show()
+    } else {
+      list.hide()
+    }
+  })
+})
+
+list.events.on('seed', function (name) {
+  main.events.emit('input', name)
 })
 
 window.onclick = function (item) {
