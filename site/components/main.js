@@ -1,24 +1,27 @@
 var css = require('dom-css')
 var _ = require('lodash')
-var request = require('browser-request')
-
-var similar = function (name, cb) {
-  request({
-    url: 'http://npmrec.com/api/similar/' + name,
-    json: true
-  }, function (req, res, body) {
-    return cb(null, body)
-  })
-}
+var EventEmitter = require('events').EventEmitter
 
 module.exports = function (container, opts) {
   var colors = opts.colors
   var fonts = opts.fonts
   var ismobile = window.innerWidth < 600
+  var events = new EventEmitter()
 
   var box = container.appendChild(document.createElement('div'))
   var top = box.appendChild(document.createElement('div'))
-  var bottom = box.appendChild(document.createElement('div'))
+  var welcome = top.appendChild(document.createElement('span'))
+  var input = top.appendChild(document.createElement('input'))
+  var prompt = top.appendChild(document.createElement('span'))
+  box.id = 'box'
+  input.id = 'input'
+  input.className = 'negative'
+  input.contentEditable = true
+  input.placeholder = 'package'
+  welcome.innerHTML = 'if you use'
+  welcome.className = 'noselect'
+  prompt.className = 'noselect'
+  prompt.innerHTML = 'check out'
 
   css(box, {
     position: 'absolute',
@@ -35,28 +38,6 @@ module.exports = function (container, opts) {
     height: '15%',
     display: 'inline-block'
   })
-
-  css(bottom, {
-    top: 0,
-    width: '100%',
-    height: ismobile ? '85%' : '80%',
-    display: 'inline-block',
-    verticalAlign: 'top'
-  })
-
-  var welcome = top.appendChild(document.createElement('span'))
-  var input = top.appendChild(document.createElement('input'))
-  var prompt = top.appendChild(document.createElement('span'))
-
-  var output = bottom.appendChild(document.createElement('div'))
-  input.id = 'input'
-  input.className = 'negative'
-  input.contentEditable = true
-  input.placeholder = 'package'
-  welcome.innerHTML = 'if you use'
-  welcome.className = 'noselect'
-  prompt.className = 'noselect'
-  prompt.innerHTML = 'check out'
 
   css(welcome, {
     color: colors.white,
@@ -113,115 +94,8 @@ module.exports = function (container, opts) {
     })
   }
 
-  var moduleList = []
-  var itemName = []
-  var itemDescription = []
-  var itemLink = []
-
-  var hideMatches = function () {
-    if (moduleList.length == 0) return
-    _.range(10).forEach(function (i) {
-      css(document.getElementById('module-' + i), {opacity: 0})
-    })
-  }
-
-  var renderMatches = function (start, matches) {
-    if (!matches || matches.length < 10) return hideMatches()
-
-    _.range(start, start + 10).forEach(function (i) {
-      if (moduleList.length < i + 1) {
-        moduleList.push(output.appendChild(document.createElement('div')))
-        moduleList[i].id = 'module-' + i
-        itemName.push(moduleList[i].appendChild(document.createElement('div')))
-        itemDescription.push(moduleList[i].appendChild(document.createElement('div')))
-        itemDescription[i].className = 'negative'
-        itemName[i].className = 'negative'
-        itemLink.push(itemName[i].appendChild(document.createElement('span')))
-        itemLink[i].innerHTML = '>'
-        itemLink[i].className = 'noselect'
-
-        css(moduleList[i], {
-          width: '45%',
-          height: '18%',
-          marginBottom: '2%',
-          marginRight: '5%',
-          display: 'inline-block',
-          verticalAlign: 'top' ,
-        })
-
-        css(itemName[i], {
-          color: colors.brown,
-          fontFamily: fonts.code,
-          fontWeight: 200,
-          paddingBottom: '3px',
-          fontSize: '135%',
-          borderBottom: colors.brown + ' dotted 2px',
-          marginBottom: '2%',
-          textDecoration: 'none',
-          cursor: 'pointer',
-          letterSpacing: '-0.035em'
-        })
-
-        if (ismobile) css(itemName[i], {fontSize: '115%'})
-
-        css(itemLink[i], {
-          color: colors.brown,
-          fontFamily: fonts.code,
-          fontWeight: 200,
-          fontSize: '80%',
-          paddingLeft: '4%',
-          paddingRight: '4%',
-          textDecoration: 'none',
-          opacity: 0.5,
-          cursor: 'pointer'
-        })
-
-        css(itemDescription[i], {
-          color: colors.brown,
-          fontFamily: fonts.code,
-          fontWeight: 200,
-          paddingBottom: '3px',
-          fontSize: '75%'
-        })
-      }
-
-      var k = (i % 2 == 0) ? i / 2 : i + (5 - Math.ceil(i/2))
-      css(moduleList[i], {opacity: 1})
-      itemName[i].innerHTML = matches[k].word
-      itemName[i].appendChild(itemLink[i])
-      var description = matches[k].description
-      if (description) {
-        if (description.length > 80) {
-          description = description.slice(0, 77) + '...'
-        }
-        itemDescription[i].innerHTML = description
-      } else {
-        itemDescription[i].innerHTML = ''
-      }
-
-      itemName[i].onclick = function () {
-        window.open('https://npmjs.org/package/' + matches[k].word)
-      }
-
-      itemLink[i].onclick = function (event) {
-        event.stopPropagation()
-        input.value = matches[k].word
-        throttledSimilar(input.value, function (err, matches) {
-          if (err) return err
-          renderMatches(0, matches)
-        })
-      }
-    })
-  }
-  
-  var throttledSimilar = _.throttle(similar, 250)
-
   input.oninput = function () {
-    var name = input.value
-    throttledSimilar(name, function (err, matches) {
-      if (err) return err
-      else renderMatches(0, matches)
-    })
+    events.emit('input', input.value)
   }
 
   return {
@@ -230,6 +104,7 @@ module.exports = function (container, opts) {
     },
     show: function () {
       css(box, {opacity: 1.0})
-    }
+    },
+    events: events
   }
 }
