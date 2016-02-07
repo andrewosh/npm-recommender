@@ -118,11 +118,20 @@ module.exports = function (container, opts) {
   var itemDescription = []
   var itemLink = []
 
-  var renderMatches = function (start, matches) {
-    _.range(start, start + 10).forEach(function (i) {
+  var hideMatches = function () {
+    if (moduleList.length == 0) return
+    _.range(10).forEach(function (i) {
+      css(document.getElementById('module-' + i), {opacity: 0})
+    })
+  }
 
+  var renderMatches = function (start, matches) {
+    if (!matches || matches.length < 10) return hideMatches()
+
+    _.range(start, start + 10).forEach(function (i) {
       if (moduleList.length < i + 1) {
         moduleList.push(output.appendChild(document.createElement('div')))
+        moduleList[i].id = 'module-' + i
         itemName.push(moduleList[i].appendChild(document.createElement('div')))
         itemDescription.push(moduleList[i].appendChild(document.createElement('div')))
         itemDescription[i].className = 'negative'
@@ -137,7 +146,7 @@ module.exports = function (container, opts) {
           marginBottom: '2%',
           marginRight: '5%',
           display: 'inline-block',
-          verticalAlign: 'top'      
+          verticalAlign: 'top' ,
         })
 
         css(itemName[i], {
@@ -177,6 +186,7 @@ module.exports = function (container, opts) {
       }
 
       var k = (i % 2 == 0) ? i / 2 : i + (5 - Math.ceil(i/2))
+      css(moduleList[i], {opacity: 1})
       itemName[i].innerHTML = matches[k].word
       itemName[i].appendChild(itemLink[i])
       var description = matches[k].description
@@ -209,11 +219,9 @@ module.exports = function (container, opts) {
 
   input.oninput = function () {
     var name = input.value
-    // var matches = require('./example.js')
-    // renderMatches(0, matches)
     throttledSimilar(name, function (err, matches) {
       if (err) return err
-      renderMatches(0, matches)
+      else renderMatches(0, matches)
     })
   }
 
