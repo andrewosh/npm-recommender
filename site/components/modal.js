@@ -16,7 +16,7 @@ module.exports = function (container, opts) {
     position: 'absolute',
     margin: '0 auto',
     display: 'table',
-    top: '25%',
+    top: '22.5%',
     left: '20%',
     right: '20%',
     width: '60% ',
@@ -25,7 +25,7 @@ module.exports = function (container, opts) {
   })
 
   if (ismobile) {
-    css(modal, {left: '10%', right: '10%', width: '80%'})
+    css(modal, {left: '5%', right: '5%', width: '90%'})
   }
 
   css(overview, {
