@@ -13,3 +13,8 @@ input:-moz-placeholder { color: rgb(64,65,54); }
 a {
 	color: rgb(64,65,54);
 }
+
+input {
+	-webkit-appearance: none;
+    border-radius: 0;
+}
