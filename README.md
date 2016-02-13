@@ -15,7 +15,7 @@ References and useful links
 An endpoint that serves the top 30 similar packages is publicly available at http://npmrec.com/api/similar
 
 ##### example
-```javascript
+```json
 GET http://npmrec.com/api/similar/<packageName>
 [
 	{	
