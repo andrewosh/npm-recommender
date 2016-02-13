@@ -4,7 +4,7 @@ There are tons of awesome packages on [npm](https://npmjs.org), and sometimes th
 Augmenting module info with additional contextual information seems like a way to improve on the tag and name-based search that's currently available. If you have ideas for cool enhancements or alternative algorithms, definitely open an issue or submit a pull request!
 
 References and useful links
--  this google [site](https://code.google.com/archive/p/word2vec/) is the main word2vec site that describes the algorithm and provides useful links
+-  this [google site](https://code.google.com/archive/p/word2vec/) is the main word2vec site that describes the algorithm and provides useful links
 -  this [document](http://www-personal.umich.edu/~ronxin/pdf/w2vexp.pdf) gives another nice explanation of word2vec
 -  [`word2vec`](https://www.npmjs.com/package/word2vec) by @planeshifter is a npm module that wrap's Google's C implementation
 -  [`node-modules`](https://github.com/mafintosh/node-modules) by @mafintosh is another cool idea for search that uses personalized account information
