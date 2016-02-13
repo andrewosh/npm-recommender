@@ -3,8 +3,6 @@ There are tons of awesome packages on [npm](https://npmjs.org), and sometimes th
 
 Augmenting module info with additional contextual information seems like a way to improve on the tag and name-based search that's currently available. If you have ideas for cool enhancements or alternative algorithms, definitely open an issue or submit a pull request!
 
-The site is live at http://npmrec.com
-
 References and useful links
 -  this google [site](https://code.google.com/archive/p/word2vec/) is the main word2vec site that describes the algorithm and provides useful links
 -  this [document](http://www-personal.umich.edu/~ronxin/pdf/w2vexp.pdf) gives another nice explanation of word2vec
@@ -12,16 +10,17 @@ References and useful links
 -  [`node-modules`](https://github.com/mafintosh/node-modules) by @mafintosh is another cool idea for search that uses personalized account information
 
 ### usage
-An endpoint that serves the top 30 similar packages is publicly available at http://npmrec.com/api/similar
+The site is live at http://npmrec.com!
 
-##### example
-```json
+And an endpoint that serves the top 30 similar packages is publicly available at http://npmrec.com/api/similar
+
+```javascript
 GET http://npmrec.com/api/similar/<packageName>
 [
 	{	
-		"word": similar-package,
+		"word": "similar-package",
 		"dist": 0.9112,
-		"description": This package is frequently used alongside packageName
+		"description": "This package is frequently used alongside packageName"
 
 	}
 	...
