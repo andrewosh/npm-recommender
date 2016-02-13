@@ -9,7 +9,7 @@ References and useful links
 -  [`word2vec`](https://www.npmjs.com/package/word2vec) by @planeshifter is a npm module that wrap's Google's C implementation
 -  [`node-modules`](https://github.com/mafintosh/node-modules) by @mafintosh is another cool idea for search that uses personalized account information
 
-### usage
+### using the API
 The site is live at http://npmrec.com!
 
 And an endpoint that serves the top 30 similar packages is publicly available at http://npmrec.com/api/similar
@@ -26,3 +26,24 @@ GET http://npmrec.com/api/similar/<packageName>
 	...
 ]
 ```
+
+### using the module
+
+This module contains code to: 
+ - crawl a mirror of the npm registry
+ - train the word2vec model
+ - precompute the similarity scores for every module in the registry
+ - serve the website
+
+To download the npm corpus, tweak parameters and train your own model:
+1. make sure that you have MongoDB installed
+2. update the fields in `conf/main.js` to appropriate values (such as where you'd like to save out the trained model)
+3. run one or many of the following commands
+ 1. `npm run download` - download and save most of the `package.json` file for every modue in the npm mirror 
+ 2. `npm run train` - train the model and generate a `vectors.txt` file 
+ 3. (optional) `npm run precompute` - will precompute similarity scores for all modules to make the website snappy
+ 3. `npm run serve` - start the API server
+ 4. `npm run build` - bundles the frontend JS
+ 5. `npm run start` - serves the website
+
+If you just run `npm run build` and `npm run start`, it will launch the website and will be configured to read from `npmrec.com/api`, so that should work without MongoDB.
