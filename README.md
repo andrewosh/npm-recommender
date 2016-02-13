@@ -35,7 +35,7 @@ This module contains code to:
  - precompute the similarity scores for every module in the registry
  - serve the website
 
-To download the npm corpus, tweak parameters and train your own model first: 
+To download the npm corpus, tweak parameters, and train your own model: 
  1. make sure that you have MongoDB installed
  2. update the fields in `conf/main.js` to appropriate values (such as where you'd like to save out the trained model)
  3. `npm run download` - download and save most of the `package.json` file for every modue in the npm mirror 
