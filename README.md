@@ -7,6 +7,9 @@ The site is live at http://npmrec.com
 
 References and useful links
 - [`node-modules`](https://github.com/mafintosh/node-modules) by @mafintosh is another cool idea for search that uses personalized account information
+-  https://code.google.com/archive/p/word2vec/ is the main word2vec site that describes the algorithm and provides useful links
+-  http://www-personal.umich.edu/~ronxin/pdf/w2vexp.pdf gives another nice explanation of word2vec
+-  https://www.npmjs.com/package/word2vec is an existing node.js module that wrap's Google's C implementation
 
 ### Usage
 An endpoint that serves the top 30 similar packages is publicly available at http://npmrec.com/api/similar
