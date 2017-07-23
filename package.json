@@ -45,6 +45,6 @@
   },
   "devDependencies": {
     "budo": "^8.0.4",
-    "mocha": "^2.4.5"
+    "mocha": "^3.4.2"
   }
 }
